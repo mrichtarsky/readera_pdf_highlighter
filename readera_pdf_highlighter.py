@@ -93,11 +93,13 @@ def get_citations_by_file(readera_backup_filename, book_filename):
 
 def show_citations_for_book(readera_backup_filename, book):
     if Path(book).is_file():
+        print(f"Searching for file '{book}'")
         book_info = get_citations_by_file(readera_backup_filename, book)
     else:
+        print(f"Searching for title '{book}'")
         uris_to_book_infos = get_all_citations(readera_backup_filename)
         for book_info in uris_to_book_infos.values():
-            if book in book_info.title:
+            if book.lower() in book_info.title.lower():
                 break
         else:
             book_info = None
