@@ -215,8 +215,12 @@ def make_highlighted_pdf(readera_backup_filename, book_filename):
         print(f"Book {book_filename} not found")
         sys.exit(1)
 
-    pdf_filename = Path(book_filename).with_suffix('.pdf')
-    book_to_pdf(book_filename, pdf_filename)
+    book_file = Path(book_filename)
+    if book_file.suffix == '.pdf':
+        pdf_filename = book_file
+    else:
+        pdf_filename = book_file.with_suffix('.pdf')
+        book_to_pdf(book_filename, pdf_filename)
     success = add_citations_to_pdf(pdf_filename, book_info.citations)
     print(f"Produced highlighted PDF file: {pdf_filename}")
     if success:
